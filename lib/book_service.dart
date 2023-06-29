@@ -2,39 +2,40 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:watcha_pedia/main.dart';
 
 import 'book.dart';
+import 'main.dart';
 
 class BookService extends ChangeNotifier {
   List<Book> bookList = []; // 책 목록
   List<Book> likedBookList = [];
   BookService() {
     //shared_preferences
-    loadLikeBookList();
+    loadLikedBookList();
   }
   /*================shared_preferences================*/
-  saveLikeBookList() {
-    List likeBookJsonList = likedBookList.map((memo) => memo.toJson()).toList();
+  saveLikedBookList() {
+    List likedBookJsonList =
+        likedBookList.map((book) => book.toJson()).toList();
     // [{"content": "1"}, {"content": "2"}]
 
-    String jsonString = jsonEncode(likeBookJsonList);
+    String jsonString = jsonEncode(likedBookJsonList);
     // '[{"content": "1"}, {"content": "2"}]'
 
     prefs.setString('likedBookList', jsonString);
   }
 
-  void loadLikeBookList() {
+  loadLikedBookList() {
     String? jsonString = prefs.getString('likedBookList');
     // '[{"content": "1"}, {"content": "2"}]'
 
     if (jsonString == null) return; // null 이면 로드하지 않음
 
-    List likeBookJsonList = jsonDecode(jsonString);
+    List likedBookJsonList = jsonDecode(jsonString);
     // [{"content": "1"}, {"content": "2"}]
 
     likedBookList =
-        likeBookJsonList.map((json) => Book.fromJson(json)).toList();
+        likedBookJsonList.map((json) => Book.fromJson(json)).toList();
   }
 
   /*================shared_preferences================*/
@@ -46,7 +47,7 @@ class BookService extends ChangeNotifier {
       likedBookList.add(book);
     }
     notifyListeners();
-    saveLikeBookList();
+    saveLikedBookList();
   }
 
   void search(String q) async {
@@ -66,7 +67,7 @@ class BookService extends ChangeNotifier {
           thumbnail: item['volumeInfo']['imageLinks']?['thumbnail'] ??
               "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
           previewLink: item['volumeInfo']['previewLink'] ?? "",
-          authors: List<String>.from(item['volumeInfo']['authors'] ?? []),
+          authors: List.from(item['volumeInfo']['authors'] ?? []),
           publishedDate: item['volumeInfo']['publishedDate'] ?? "",
         );
         bookList.add(book);
