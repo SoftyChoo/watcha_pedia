@@ -81,7 +81,9 @@ class SearchPage extends StatelessWidget {
         backgroundColor: Colors.white,
         toolbarHeight: 80,
         title: TextField(
-          onSubmitted: (value) {},
+          onSubmitted: (value) {
+            print(value);
+          },
           cursorColor: Colors.grey,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search, color: Colors.grey),
