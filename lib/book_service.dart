@@ -15,7 +15,6 @@ class BookService extends ChangeNotifier {
       likedBookList.add(book);
     }
     notifyListeners();
-    print(likedBookList);
   }
 
   void search(String q) async {

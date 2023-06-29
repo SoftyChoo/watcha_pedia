@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import 'book.dart';
@@ -170,10 +171,25 @@ class LikedBookPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("좋아요"),
-      ),
+    return Consumer<BookService>(
+      builder: (context, bookService, child) {
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ListView.separated(
+              itemCount: bookService.bookList.length,
+              separatorBuilder: (context, index) {
+                return Divider();
+              },
+              itemBuilder: (context, index) {
+                if (bookService.bookList.isEmpty) return SizedBox();
+                Book book = bookService.bookList.elementAt(index);
+                return BookTile(book: book);
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
