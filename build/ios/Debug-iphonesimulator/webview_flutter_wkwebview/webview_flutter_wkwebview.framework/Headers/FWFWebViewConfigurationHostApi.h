@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
                         instanceManager:(FWFInstanceManager *)instanceManager;
 
 - (void)createWithConfiguration:(WKWebViewConfiguration *)configuration
-                     completion:(void (^)(FlutterError *_Nullable))completion;
+                     completion:(void (^)(NSError *_Nullable))completion;
 @end
 
 /**

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return An NSURLRequest or nil if data could not be converted.
  */
-extern NSURLRequest *_Nullable FWFNativeNSURLRequestFromRequestData(FWFNSUrlRequestData *data);
+extern NSURLRequest *_Nullable FWFNSURLRequestFromRequestData(FWFNSUrlRequestData *data);
 
 /**
  * Converts an FWFNSHttpCookieData to an NSHTTPCookie.
@@ -24,7 +24,7 @@ extern NSURLRequest *_Nullable FWFNativeNSURLRequestFromRequestData(FWFNSUrlRequ
  *
  * @return An NSHTTPCookie or nil if data could not be converted.
  */
-extern NSHTTPCookie *_Nullable FWFNativeNSHTTPCookieFromCookieData(FWFNSHttpCookieData *data);
+extern NSHTTPCookie *_Nullable FWFNSHTTPCookieFromCookieData(FWFNSHttpCookieData *data);
 
 /**
  * Converts an FWFNSKeyValueObservingOptionsEnumData to an NSKeyValueObservingOptions.
@@ -33,7 +33,7 @@ extern NSHTTPCookie *_Nullable FWFNativeNSHTTPCookieFromCookieData(FWFNSHttpCook
  *
  * @return An NSKeyValueObservingOptions or -1 if data could not be converted.
  */
-extern NSKeyValueObservingOptions FWFNativeNSKeyValueObservingOptionsFromEnumData(
+extern NSKeyValueObservingOptions FWFNSKeyValueObservingOptionsFromEnumData(
     FWFNSKeyValueObservingOptionsEnumData *data);
 
 /**
@@ -43,7 +43,7 @@ extern NSKeyValueObservingOptions FWFNativeNSKeyValueObservingOptionsFromEnumDat
  *
  * @return An NSHttpCookiePropertyKey or nil if data could not be converted.
  */
-extern NSHTTPCookiePropertyKey _Nullable FWFNativeNSHTTPCookiePropertyKeyFromEnumData(
+extern NSHTTPCookiePropertyKey _Nullable FWFNSHTTPCookiePropertyKeyFromEnumData(
     FWFNSHttpCookiePropertyKeyEnumData *data);
 
 /**
@@ -53,7 +53,7 @@ extern NSHTTPCookiePropertyKey _Nullable FWFNativeNSHTTPCookiePropertyKeyFromEnu
  *
  * @return A WKUserScript or nil if data could not be converted.
  */
-extern WKUserScript *FWFNativeWKUserScriptFromScriptData(FWFWKUserScriptData *data);
+extern WKUserScript *FWFWKUserScriptFromScriptData(FWFWKUserScriptData *data);
 
 /**
  * Converts an FWFWKUserScriptInjectionTimeEnumData to a WKUserScriptInjectionTime.
@@ -62,7 +62,7 @@ extern WKUserScript *FWFNativeWKUserScriptFromScriptData(FWFWKUserScriptData *da
  *
  * @return A WKUserScriptInjectionTime or -1 if data could not be converted.
  */
-extern WKUserScriptInjectionTime FWFNativeWKUserScriptInjectionTimeFromEnumData(
+extern WKUserScriptInjectionTime FWFWKUserScriptInjectionTimeFromEnumData(
     FWFWKUserScriptInjectionTimeEnumData *data);
 
 /**
@@ -72,7 +72,8 @@ extern WKUserScriptInjectionTime FWFNativeWKUserScriptInjectionTimeFromEnumData(
  *
  * @return A WKAudiovisualMediaType or -1 if data could not be converted.
  */
-extern WKAudiovisualMediaTypes FWFNativeWKAudiovisualMediaTypeFromEnumData(
+API_AVAILABLE(ios(10.0))
+extern WKAudiovisualMediaTypes FWFWKAudiovisualMediaTypeFromEnumData(
     FWFWKAudiovisualMediaTypeEnumData *data);
 
 /**
@@ -82,8 +83,7 @@ extern WKAudiovisualMediaTypes FWFNativeWKAudiovisualMediaTypeFromEnumData(
  *
  * @return A WKWebsiteDataType or nil if data could not be converted.
  */
-extern NSString *_Nullable FWFNativeWKWebsiteDataTypeFromEnumData(
-    FWFWKWebsiteDataTypeEnumData *data);
+extern NSString *_Nullable FWFWKWebsiteDataTypeFromEnumData(FWFWKWebsiteDataTypeEnumData *data);
 
 /**
  * Converts a WKNavigationAction to an FWFWKNavigationActionData.
@@ -92,7 +92,7 @@ extern NSString *_Nullable FWFNativeWKWebsiteDataTypeFromEnumData(
  *
  * @return A FWFWKNavigationActionData.
  */
-extern FWFWKNavigationActionData *FWFWKNavigationActionDataFromNativeWKNavigationAction(
+extern FWFWKNavigationActionData *FWFWKNavigationActionDataFromNavigationAction(
     WKNavigationAction *action);
 
 /**
@@ -102,7 +102,7 @@ extern FWFWKNavigationActionData *FWFWKNavigationActionDataFromNativeWKNavigatio
  *
  * @return A FWFNSUrlRequestData.
  */
-extern FWFNSUrlRequestData *FWFNSUrlRequestDataFromNativeNSURLRequest(NSURLRequest *request);
+extern FWFNSUrlRequestData *FWFNSUrlRequestDataFromNSURLRequest(NSURLRequest *request);
 
 /**
  * Converts a WKFrameInfo to an FWFWKFrameInfoData.
@@ -111,7 +111,7 @@ extern FWFNSUrlRequestData *FWFNSUrlRequestDataFromNativeNSURLRequest(NSURLReque
  *
  * @return A FWFWKFrameInfoData.
  */
-extern FWFWKFrameInfoData *FWFWKFrameInfoDataFromNativeWKFrameInfo(WKFrameInfo *info);
+extern FWFWKFrameInfoData *FWFWKFrameInfoDataFromWKFrameInfo(WKFrameInfo *info);
 
 /**
  * Converts an FWFWKNavigationActionPolicyEnumData to a WKNavigationActionPolicy.
@@ -120,7 +120,7 @@ extern FWFWKFrameInfoData *FWFWKFrameInfoDataFromNativeWKFrameInfo(WKFrameInfo *
  *
  * @return A WKNavigationActionPolicy or -1 if data could not be converted.
  */
-extern WKNavigationActionPolicy FWFNativeWKNavigationActionPolicyFromEnumData(
+extern WKNavigationActionPolicy FWFWKNavigationActionPolicyFromEnumData(
     FWFWKNavigationActionPolicyEnumData *data);
 
 /**
@@ -130,16 +130,16 @@ extern WKNavigationActionPolicy FWFNativeWKNavigationActionPolicyFromEnumData(
  *
  * @return A FWFNSErrorData.
  */
-extern FWFNSErrorData *FWFNSErrorDataFromNativeNSError(NSError *error);
+extern FWFNSErrorData *FWFNSErrorDataFromNSError(NSError *error);
 
 /**
  * Converts an NSKeyValueChangeKey to a FWFNSKeyValueChangeKeyEnumData.
  *
  * @param key The data object containing information to create a FWFNSKeyValueChangeKeyEnumData.
  *
- * @return A FWFNSKeyValueChangeKeyEnumData.
+ * @return A FWFNSKeyValueChangeKeyEnumData or nil if data could not be converted.
  */
-extern FWFNSKeyValueChangeKeyEnumData *FWFNSKeyValueChangeKeyEnumDataFromNativeNSKeyValueChangeKey(
+extern FWFNSKeyValueChangeKeyEnumData *FWFNSKeyValueChangeKeyEnumDataFromNSKeyValueChangeKey(
     NSKeyValueChangeKey key);
 
 /**
@@ -149,48 +149,6 @@ extern FWFNSKeyValueChangeKeyEnumData *FWFNSKeyValueChangeKeyEnumDataFromNativeN
  *
  * @return A FWFWKScriptMessageData.
  */
-extern FWFWKScriptMessageData *FWFWKScriptMessageDataFromNativeWKScriptMessage(
-    WKScriptMessage *message);
-
-/**
- * Converts a WKNavigationType to an FWFWKNavigationType.
- *
- * @param type The object containing information to create a FWFWKNavigationType
- *
- * @return A FWFWKNavigationType.
- */
-extern FWFWKNavigationType FWFWKNavigationTypeFromNativeWKNavigationType(WKNavigationType type);
-
-/**
- * Converts a WKSecurityOrigin to an FWFWKSecurityOriginData.
- *
- * @param origin The object containing information to create an FWFWKSecurityOriginData.
- *
- * @return An FWFWKSecurityOriginData.
- */
-extern FWFWKSecurityOriginData *FWFWKSecurityOriginDataFromNativeWKSecurityOrigin(
-    WKSecurityOrigin *origin);
-
-/**
- * Converts an FWFWKPermissionDecisionData to a WKPermissionDecision.
- *
- * @param data The data object containing information to create a WKPermissionDecision.
- *
- * @return A WKPermissionDecision or -1 if data could not be converted.
- */
-API_AVAILABLE(ios(15.0))
-extern WKPermissionDecision FWFNativeWKPermissionDecisionFromData(
-    FWFWKPermissionDecisionData *data);
-
-/**
- * Converts an WKMediaCaptureType to a FWFWKMediaCaptureTypeData.
- *
- * @param type The data object containing information to create a FWFWKMediaCaptureTypeData.
- *
- * @return A FWFWKMediaCaptureTypeData or nil if data could not be converted.
- */
-API_AVAILABLE(ios(15.0))
-extern FWFWKMediaCaptureTypeData *FWFWKMediaCaptureTypeDataFromNativeWKMediaCaptureType(
-    WKMediaCaptureType type);
+extern FWFWKScriptMessageData *FWFWKScriptMessageDataFromWKScriptMessage(WKScriptMessage *message);
 
 NS_ASSUME_NONNULL_END
