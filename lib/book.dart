@@ -4,7 +4,7 @@ class Book {
   String subtitle;
   String thumbnail; // 썸네일 이미지 링크
   String previewLink; // ListTile 을 눌렀을 때 이동하는 링크
-  String authors;
+  List<String> authors;
   String publishedDate;
 
   Book({
