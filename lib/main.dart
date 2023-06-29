@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'book.dart';
 import 'book_service.dart';
@@ -111,8 +111,7 @@ class SearchPage extends StatelessWidget {
                 return Divider();
               },
               itemBuilder: (context, index) {
-                if (bookService.bookList.isEmpty)
-                  return SizedBox(); //비어있으면 비어있는거 반환
+                if (bookService.bookList.isEmpty) return SizedBox();
                 Book book = bookService.bookList.elementAt(index);
                 return BookTile(book: book);
               },
@@ -126,19 +125,27 @@ class SearchPage extends StatelessWidget {
 
 class BookTile extends StatelessWidget {
   const BookTile({
-    super.key,
+    Key? key,
     required this.book,
-  });
+  }) : super(key: key);
 
   final Book book;
 
   @override
   Widget build(BuildContext context) {
-    BookService bookService =
-        context.read<BookService>(); //1회성으로 전부 새로고침이 필요없을 때
+    BookService bookService = context.read<BookService>();
 
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WebViewPage(
+              url: book.previewLink.replaceFirst("http", "https"),
+            ),
+          ),
+        );
+      },
       leading: Image.network(
         book.thumbnail,
         fit: BoxFit.fitHeight,
@@ -177,19 +184,36 @@ class LikedBookPage extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ListView.separated(
-              itemCount: bookService.bookList.length,
+              itemCount: bookService.likedBookList.length,
               separatorBuilder: (context, index) {
                 return Divider();
               },
               itemBuilder: (context, index) {
-                if (bookService.bookList.isEmpty) return SizedBox();
-                Book book = bookService.bookList.elementAt(index);
+                if (bookService.likedBookList.isEmpty) return SizedBox();
+                Book book = bookService.likedBookList.elementAt(index);
                 return BookTile(book: book);
               },
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class WebViewPage extends StatelessWidget {
+  WebViewPage({super.key, required this.url});
+
+  String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey,
+        title: Text(url),
+      ),
+      body: WebView(initialUrl: url),
     );
   }
 }
