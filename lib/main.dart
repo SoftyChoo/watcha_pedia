@@ -155,7 +155,8 @@ class BookTile extends StatelessWidget {
         style: TextStyle(fontSize: 16),
       ),
       subtitle: Text(
-        book.subtitle,
+        // book.subtitle,
+        '${book.authors} • ${book.publishedDate}',
         style: TextStyle(color: Colors.grey),
       ),
       trailing: IconButton(
