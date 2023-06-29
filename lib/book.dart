@@ -16,4 +16,29 @@ class Book {
     required this.authors,
     required this.publishedDate,
   });
+  //여기아래로 shared_preferences
+  Map toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'subtitle': subtitle,
+      'thumbnail': thumbnail,
+      'previewLink': previewLink,
+      'authors': authors,
+      'publishedDate': publishedDate,
+    };
+  }
+
+  // shared_preferences
+  factory Book.fromJson(json) {
+    return Book(
+      id: json['id'],
+      title: json['title'],
+      authors: json['authors'],
+      previewLink: json['previewLink'],
+      publishedDate: json['publishedDate'],
+      subtitle: json['subtitle'],
+      thumbnail: json['thumbnail'],
+    );
+  }
 }

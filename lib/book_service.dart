@@ -1,12 +1,43 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:watcha_pedia/main.dart';
 
 import 'book.dart';
 
 class BookService extends ChangeNotifier {
   List<Book> bookList = []; // 책 목록
   List<Book> likedBookList = [];
+  BookService() {
+    //shared_preferences
+    loadLikeBookList();
+  }
+  /*================shared_preferences================*/
+  saveLikeBookList() {
+    List likeBookJsonList = likedBookList.map((memo) => memo.toJson()).toList();
+    // [{"content": "1"}, {"content": "2"}]
 
+    String jsonString = jsonEncode(likeBookJsonList);
+    // '[{"content": "1"}, {"content": "2"}]'
+
+    prefs.setString('likedBookList', jsonString);
+  }
+
+  void loadLikeBookList() {
+    String? jsonString = prefs.getString('likedBookList');
+    // '[{"content": "1"}, {"content": "2"}]'
+
+    if (jsonString == null) return; // null 이면 로드하지 않음
+
+    List likeBookJsonList = jsonDecode(jsonString);
+    // [{"content": "1"}, {"content": "2"}]
+
+    likedBookList =
+        likeBookJsonList.map((json) => Book.fromJson(json)).toList();
+  }
+
+  /*================shared_preferences================*/
   void toggleLikeBook({required Book book}) {
     String bookId = book.id;
     if (likedBookList.map((book) => book.id).contains(bookId)) {
@@ -15,6 +46,7 @@ class BookService extends ChangeNotifier {
       likedBookList.add(book);
     }
     notifyListeners();
+    saveLikeBookList();
   }
 
   void search(String q) async {
