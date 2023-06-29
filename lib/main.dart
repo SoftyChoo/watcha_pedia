@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'book.dart';
 import 'book_service.dart';
 
 void main() {
@@ -76,31 +77,89 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        toolbarHeight: 80,
-        title: TextField(
-          onSubmitted: (value) {
-            print(value);
-          },
-          cursorColor: Colors.grey,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search, color: Colors.grey),
-            hintText: "작품, 감독, 배우, 컬렉션, 유저 등",
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+    return Consumer<BookService>(
+      builder: (context, bookService, child) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            toolbarHeight: 80,
+            title: TextField(
+              onSubmitted: (value) {
+                bookService.search(value);
+              },
+              cursorColor: Colors.grey,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintText: "작품, 감독, 배우, 컬렉션, 유저 등",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+              ),
             ),
           ),
-        ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ListView.separated(
+              itemCount: bookService.bookList.length,
+              separatorBuilder: (context, index) {
+                return Divider();
+              },
+              itemBuilder: (context, index) {
+                if (bookService.bookList.isEmpty)
+                  return SizedBox(); //비어있으면 비어있는거 반환
+                Book book = bookService.bookList.elementAt(index);
+                return BookTile(book: book);
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class BookTile extends StatelessWidget {
+  const BookTile({
+    super.key,
+    required this.book,
+  });
+
+  final Book book;
+
+  @override
+  Widget build(BuildContext context) {
+    BookService bookService =
+        context.read<BookService>(); //1회성으로 전부 새로고침이 필요없을 때
+
+    return ListTile(
+      onTap: () {},
+      leading: Image.network(
+        book.thumbnail,
+        fit: BoxFit.fitHeight,
       ),
-      body: Center(
-        child: Text("검색"),
+      title: Text(
+        book.title,
+        style: TextStyle(fontSize: 16),
+      ),
+      subtitle: Text(
+        book.subtitle,
+        style: TextStyle(color: Colors.grey),
+      ),
+      trailing: IconButton(
+        onPressed: () {
+          bookService.toggleLikeBook(book: book);
+        },
+        icon: bookService.likedBookList.map((book) => book.id).contains(book.id)
+            ? Icon(
+                Icons.star,
+                color: Colors.amber,
+              )
+            : Icon(Icons.star_border),
       ),
     );
   }
