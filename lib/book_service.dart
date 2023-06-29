@@ -30,12 +30,12 @@ class BookService extends ChangeNotifier {
         Book book = Book(
           id: item['id'],
           title: item['volumeInfo']['title'] ?? "",
-          //subtitle: item['volumeInfo']['subtitle'] ?? "",
+          authors: item['volumeInfo']['authors'] ?? "",
+          publishedDate: item['volumeInfo']['publishedDate'] ?? "",
+          subtitle: item['volumeInfo']['subtitle'] ?? "",
           thumbnail: item['volumeInfo']['imageLinks']?['thumbnail'] ??
               "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
           previewLink: item['volumeInfo']['previewLink'] ?? "",
-          authors: item['volumeInfo']['authors'] ?? "",
-          publishedDate: item['volumeInfo']['publishedDate'] ?? "",
         );
         bookList.add(book);
       }
